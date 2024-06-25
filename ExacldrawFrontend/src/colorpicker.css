@@ -1,0 +1,13 @@
+/* ColorPicker.css */
+.color-picker {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.color-option {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    cursor: pointer;
+}

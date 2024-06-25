@@ -1,0 +1,52 @@
+/* DrawingTools.css */
+.drawing-tools {
+    display: flex;
+    justify-content: center;
+}
+
+.color-picker {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.color-option {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    cursor: pointer;
+}
+.auth{
+    display: flex;
+    justify-content: center;
+}
+.drawing-tools {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+}
+
+.tool {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: white;
+}
+
+.tool.active {
+    border-color: #007bff;
+    background-color: #e7f1ff;
+}
+
+.color-picker {
+    display: flex;
+    align-items: center;
+}
+
+.color-picker input {
+    cursor: pointer;
+}

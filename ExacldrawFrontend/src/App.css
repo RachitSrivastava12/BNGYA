@@ -1,0 +1,68 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #282c34;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #20232a;
+}
+
+.drawing-tools {
+  display: flex;
+}
+
+.tool {
+  padding: 10px;
+  margin: 0 5px;
+  background: #61dafb;
+  border: none;
+  cursor: pointer;
+}
+
+.tool.active {
+  background: #21a1f1;
+}
+
+.color-picker input {
+  margin: 0 5px;
+}
+
+.drawings-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.drawing-card {
+  margin: 10px;
+  cursor: pointer;
+}
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+.main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+canvas {
+  border: 1px solid #000;
+}
+
