@@ -184,3 +184,4 @@ const Whiteboard = ({ selectedTool, penColor, textSettings, onSave, brushSize, h
 };
 
 export default Whiteboard;
+
