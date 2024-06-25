@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import backendUrl from './config';
+import backendUrl from './config'; // Ensure this is correctly configured
 import DrawingTools from './DrawingTools';
 import Whiteboard from './Whiteboard';
 import SignUpSignIn from './SignUpSignIn';
@@ -7,8 +7,7 @@ import SavedDrawings from './SavedDrawings';
 import './App.css';
 import axios from 'axios';
 
-// Update this URL if your server is running on a different port or host
-const API_URL = 'http://localhost:3001';
+const API_URL = 'http://localhost:3001'; // Ensure this matches your backend URL
 
 const App = () => {
     const [selectedTool, setSelectedTool] = useState('pen');
@@ -29,7 +28,7 @@ const App = () => {
         const token = localStorage.getItem('token');
         if (token) {
             setIsSignedIn(true);
-            fetchDrawings();
+            fetchDrawings(); // Fetch drawings if user is signed in
         }
     }, []);
 
@@ -48,7 +47,7 @@ const App = () => {
 
     const handleSignUp = async (email, password, username) => {
         try {
-            const response = await axios.post(`${backendUrl}/api/signup`, {
+            const response = await axios.post(`${API_URL}/api/signup`, {
                 email,
                 password,
                 username,
@@ -57,13 +56,15 @@ const App = () => {
             if (response.status === 201) {
                 const { token } = response.data;
                 localStorage.setItem('token', token);
-                setIsSignedIn(true);
-                fetchDrawings();
+                setIsSignedIn(true); // Update sign-in status
+                fetchDrawings(); // Fetch drawings after sign-up
             } else {
                 console.error('Sign up failed');
+                // Handle failed sign-up here (e.g., show error message to user)
             }
         } catch (error) {
             console.error('Sign up error:', error);
+            // Handle sign-up error here (e.g., show error message to user)
         }
     };
 
@@ -77,26 +78,28 @@ const App = () => {
             if (response.status === 200) {
                 const { token } = response.data;
                 localStorage.setItem('token', token);
-                setIsSignedIn(true);
-                fetchDrawings();
+                setIsSignedIn(true); // Update sign-in status
+                fetchDrawings(); // Fetch drawings after sign-in
             } else {
                 console.error('Sign in failed');
+                // Handle failed sign-in here (e.g., show error message to user)
             }
         } catch (error) {
             console.error('Sign in error:', error);
+            // Handle sign-in error here (e.g., show error message to user)
         }
     };
 
     const handleSignOut = () => {
         localStorage.removeItem('token');
-        setIsSignedIn(false);
-        setDrawings([]);
+        setIsSignedIn(false); // Update sign-in status
+        setDrawings([]); // Clear drawings on sign-out
     };
 
     const handleShowSavedDrawings = () => {
         setShowSavedDrawings((prev) => !prev);
         if (!showSavedDrawings) {
-            fetchDrawings();
+            fetchDrawings(); // Fetch drawings when showing saved drawings
         }
     };
 
@@ -114,16 +117,18 @@ const App = () => {
             });
     
             if (response.status === 200) {
-                setDrawings(response.data);
+                setDrawings(response.data); // Update drawings state
             } else {
                 console.error('Fetching drawings failed');
+                // Handle fetching drawings failure here
             }
         } catch (error) {
             console.error('Fetch drawings error:', error);
             if (error.response && error.response.status === 403) {
                 console.error('Authentication failed. Please sign in again.');
-                handleSignOut();
+                handleSignOut(); // Sign out user if token is invalid
             }
+            // Handle other fetch drawings errors here
         }
     };
 
@@ -146,12 +151,14 @@ const App = () => {
 
             if (response.status === 201) {
                 console.log('Drawing saved successfully');
-                fetchDrawings();
+                fetchDrawings(); // Fetch drawings after saving
             } else {
                 console.error('Saving drawing failed');
+                // Handle saving drawing failure here
             }
         } catch (error) {
             console.error('Save drawing error:', error);
+            // Handle save drawing error here
         }
     };
 
@@ -185,21 +192,21 @@ const App = () => {
                             <SavedDrawings drawings={drawings} />
                         ) : (
                             <>
-                               <DrawingTools
-    selectedTool={selectedTool}
-    onSelectTool={handleToolSelect}
-    onColorChange={handlePenColorChange}
-    onEraseAll={handleEraseAll}
-    onTextSettingsChange={handleTextSettingsChange}
-    onBrushSizeChange={(size) => setBrushSize(size)}
-/>
-<Whiteboard
-    selectedTool={selectedTool}
-    penColor={penColor}
-    textSettings={textSettings}
-    onSave={handleSaveDrawing}
-    brushSize={brushSize}
-/>
+                                <DrawingTools
+                                    selectedTool={selectedTool}
+                                    onSelectTool={handleToolSelect}
+                                    onColorChange={handlePenColorChange}
+                                    onEraseAll={handleEraseAll}
+                                    onTextSettingsChange={handleTextSettingsChange}
+                                    onBrushSizeChange={(size) => setBrushSize(size)}
+                                />
+                                <Whiteboard
+                                    selectedTool={selectedTool}
+                                    penColor={penColor}
+                                    textSettings={textSettings}
+                                    onSave={handleSaveDrawing}
+                                    brushSize={brushSize}
+                                />
                             </>
                         )}
                     </main>
