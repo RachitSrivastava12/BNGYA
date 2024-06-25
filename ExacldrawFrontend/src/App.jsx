@@ -7,7 +7,7 @@ import SavedDrawings from './SavedDrawings';
 import './App.css';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3001'; // Ensure this matches your backend URL
+const API_URL = 'https://bngya-1.onrender.com'; // Ensure this matches your backend URL
 
 const App = () => {
     const [selectedTool, setSelectedTool] = useState('pen');
