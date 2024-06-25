@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import backendUrl from './config';
 import DrawingTools from './DrawingTools';
 import Whiteboard from './Whiteboard';
 import SignUpSignIn from './SignUpSignIn';
@@ -47,7 +48,7 @@ const App = () => {
 
     const handleSignUp = async (email, password, username) => {
         try {
-            const response = await axios.post(`${API_URL}/api/signup`, {
+            const response = await axios.post(`${backendUrl}/api/signup`, {
                 email,
                 password,
                 username,

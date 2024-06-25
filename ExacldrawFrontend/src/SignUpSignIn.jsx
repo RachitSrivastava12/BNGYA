@@ -3,6 +3,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import axios from 'axios';
+import backendUrl from './config';
 
 const SignUpSignIn = ({ onSignIn, onSignUp }) => {
     const [email, setEmail] = useState('');
@@ -17,12 +19,32 @@ const SignUpSignIn = ({ onSignIn, onSignUp }) => {
         setUsername('');
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (isSignIn) {
-            onSignIn(email, password);
+            await handleSignIn(email, password);
         } else {
-                      onSignUp(email, password, username);
+            await handleSignUp(email, password, username);
+        }
+    };
+
+    const handleSignIn = async (email, password) => {
+        try {
+            const response = await axios.post(`${backendUrl}/api/signin`, { email, password });
+            console.log('Sign in successful', response);
+            // Perform any additional sign-in logic here
+        } catch (error) {
+            console.error('Error during sign in', error);
+        }
+    };
+
+    const handleSignUp = async (email, password, username) => {
+        try {
+            const response = await axios.post(`${backendUrl}/api/signup`, { email, password, username });
+            console.log('Sign up successful', response);
+            // Perform any additional sign-up logic here
+        } catch (error) {
+            console.error('Error during sign up', error);
         }
     };
 
