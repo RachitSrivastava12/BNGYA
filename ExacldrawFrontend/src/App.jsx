@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import backendUrl from './config'; // Ensure this is correctly configured
+mport React, { useState, useEffect } from 'react';
+// import backendUrl from './config';
 import DrawingTools from './DrawingTools';
 import Whiteboard from './Whiteboard';
 import SignUpSignIn from './SignUpSignIn';
@@ -7,11 +7,9 @@ import SavedDrawings from './SavedDrawings';
 import './App.css';
 import axios from 'axios';
 
-const API_URL = 'https://bngya-1.onrender.com'; // Ensure this matches your backend URL
-
 const App = () => {
     const [selectedTool, setSelectedTool] = useState('pen');
-    const [brushSize, setBrushSize] = useState(5);  
+    const [brushSize, setBrushSize] = useState(5);
     const [penColor, setPenColor] = useState('#000000');
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [showSavedDrawings, setShowSavedDrawings] = useState(false);
@@ -28,7 +26,7 @@ const App = () => {
         const token = localStorage.getItem('token');
         if (token) {
             setIsSignedIn(true);
-            fetchDrawings(); // Fetch drawings if user is signed in
+            fetchDrawings();
         }
     }, []);
 
@@ -47,7 +45,7 @@ const App = () => {
 
     const handleSignUp = async (email, password, username) => {
         try {
-            const response = await axios.post(`${API_URL}/api/signup`, {
+            const response = await axios.post('http://localhost:3001/api/signup', {
                 email,
                 password,
                 username,
@@ -56,21 +54,19 @@ const App = () => {
             if (response.status === 201) {
                 const { token } = response.data;
                 localStorage.setItem('token', token);
-                setIsSignedIn(true); // Update sign-in status
-                fetchDrawings(); // Fetch drawings after sign-up
+                setIsSignedIn(true);
+                fetchDrawings();
             } else {
                 console.error('Sign up failed');
-                // Handle failed sign-up here (e.g., show error message to user)
             }
         } catch (error) {
             console.error('Sign up error:', error);
-            // Handle sign-up error here (e.g., show error message to user)
         }
     };
 
     const handleSignIn = async (email, password) => {
         try {
-            const response = await axios.post(`${API_URL}/api/signin`, {
+            const response = await axios.post('http://localhost:3001/api/signin', {
                 email,
                 password,
             });
@@ -78,28 +74,26 @@ const App = () => {
             if (response.status === 200) {
                 const { token } = response.data;
                 localStorage.setItem('token', token);
-                setIsSignedIn(true); // Update sign-in status
-                fetchDrawings(); // Fetch drawings after sign-in
+                setIsSignedIn(true);
+                fetchDrawings();
             } else {
                 console.error('Sign in failed');
-                // Handle failed sign-in here (e.g., show error message to user)
             }
         } catch (error) {
             console.error('Sign in error:', error);
-            // Handle sign-in error here (e.g., show error message to user)
         }
     };
 
     const handleSignOut = () => {
         localStorage.removeItem('token');
-        setIsSignedIn(false); // Update sign-in status
-        setDrawings([]); // Clear drawings on sign-out
+        setIsSignedIn(false);
+        setDrawings([]);
     };
 
     const handleShowSavedDrawings = () => {
         setShowSavedDrawings((prev) => !prev);
         if (!showSavedDrawings) {
-            fetchDrawings(); // Fetch drawings when showing saved drawings
+            fetchDrawings();
         }
     };
 
@@ -110,25 +104,23 @@ const App = () => {
                 console.error('No token found');
                 return;
             }
-            const response = await axios.get(`${API_URL}/api/drawings`, {
+            const response = await axios.get('http://localhost:3001/api/drawings', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
-    
+
             if (response.status === 200) {
-                setDrawings(response.data); // Update drawings state
+                setDrawings(response.data);
             } else {
                 console.error('Fetching drawings failed');
-                // Handle fetching drawings failure here
             }
         } catch (error) {
             console.error('Fetch drawings error:', error);
             if (error.response && error.response.status === 403) {
                 console.error('Authentication failed. Please sign in again.');
-                handleSignOut(); // Sign out user if token is invalid
+                handleSignOut();
             }
-            // Handle other fetch drawings errors here
         }
     };
 
@@ -142,7 +134,7 @@ const App = () => {
             formData.append('drawing', dataUrlToBlob(dataUrl), 'drawing.png');
             formData.append('name', drawingName);
 
-            const response = await axios.post(`${API_URL}/api/drawing`, formData, {
+            const response = await axios.post('http://localhost:3001/api/drawing', formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data',
@@ -151,14 +143,12 @@ const App = () => {
 
             if (response.status === 201) {
                 console.log('Drawing saved successfully');
-                fetchDrawings(); // Fetch drawings after saving
+                fetchDrawings();
             } else {
                 console.error('Saving drawing failed');
-                // Handle saving drawing failure here
             }
         } catch (error) {
             console.error('Save drawing error:', error);
-            // Handle save drawing error here
         }
     };
 
