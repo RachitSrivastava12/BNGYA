@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Grid, Card, CardMedia, CardContent } from '@mui/material';
-import backendUrl from './config';
+// import backendUrl from './config';
+
 const SavedDrawings = ({ drawings, onSelect }) => {
     return (
         <Box sx={{ flexGrow: 1, p: 3 }}>
@@ -17,7 +18,7 @@ const SavedDrawings = ({ drawings, onSelect }) => {
                                 <CardMedia
                                     component="img"
                                     height="140"
-                                    image={`${backendUrl}/uploads/${drawing.filePath.split('/').pop()}`}
+                                    image={`http://localhost:3001/uploads/${drawing.filePath.split('/').pop()}`}
                                     alt={drawing.name}
                                 />
                                 <CardContent>
